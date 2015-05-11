@@ -1,45 +1,64 @@
-<h1>Divisions:</h1>
+<div id="Individuals">
+  <h1>Divisions:</h1>
 
-<p>
-  <% if @divisions.any? %>
-  <ul>
-    <% @divisions.each() do |division| %>
-      <li><a href="/divisions/<%= division.id %>" id="<%= division.id %>"><%= division.name %></a></li>
+  <p>
+    <% if @divisions.any? %>
+    <ul>
+      <% @divisions.each() do |division| %>
+        <li><a href="/divisions/<%= division.id %>" id="<%= division.id %>"><%= division.name %></a></li>
+      <% end %>
+    </ul>
+    <% else %>
+      There are no divisions.
     <% end %>
-  </ul>
-  <% else %>
-    There are no divisions.
-  <% end %>
-</p>
+  </p>
 
-<div class='form-group'>
-  <form action="/divisions" method="post">
-    <label for="new_division">Enter a new Division Name:</label>
-    <input required type="text" name="new_division" id="new_division" class='form-control'>
-    <br>
-    <button class='btn btn-primary' id='add_division' type='submit' name="add_division">Add Division</button>
-  </form>
+  <div class='form-group'>
+    <form action="/divisions" method="post">
+      <label for="new_division">Enter a new Division Name:</label>
+      <input required type="text" name="new_division" id="new_division" class='form-control'>
+      <br>
+      <button class='btn btn-primary' id='add_division' type='submit' name="add_division">Add Division</button>
+    </form>
+  </div>
+
+  <h1>Employees:</h1>
+
+  <p>
+    <% if @employees.any? %>
+    <ul>
+      <% @employees.each() do |employee| %>
+        <li><%= employee.name %></li>
+      <% end %>
+    </ul>
+    <% else %>
+      There are no employees.
+    <% end %>
+  </p>
+
+  <div class='form-group'>
+    <form action="/divisions/employee" method="post">
+      <label for="new_employee">Enter a new Employee Name:</label>
+      <input required type="text" name="new_employee" id="new_employee" class='form-control'>
+      <br>
+      <button class='btn btn-primary' id='add_employee' type='submit' name="add_division">Add Employee</button>
+    </form>
+  </div>
 </div>
 
-<h1>Employees:</h1>
-
-<p>
-  <% if @employees.any? %>
-  <ul>
-    <% @employees.each() do |employee| %>
-      <li><%= employee.name %></li>
+<div id="Tree">
+  <% if @divisions.any? %>
+    <% @divisions.each() do |division| %>
+    <ul>
+      <li><%= division.name %></li>
+        <% if Employee.get_by_division_id(division.id).any? %>
+        <ul>
+          <% Employee.get_by_division_id(division.id).each() do |employee| %>
+            <li><%= employee.name %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </ul>
     <% end %>
-  </ul>
-  <% else %>
-    There are no employees.
   <% end %>
-</p>
-
-<div class='form-group'>
-  <form action="/divisions/employee" method="post">
-    <label for="new_employee">Enter a new Employee Name:</label>
-    <input required type="text" name="new_employee" id="new_employee" class='form-control'>
-    <br>
-    <button class='btn btn-primary' id='add_employee' type='submit' name="add_division">Add Employee</button>
-  </form>
 </div>
