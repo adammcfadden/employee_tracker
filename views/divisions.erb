@@ -1,4 +1,5 @@
-<div id="Individuals">
+<div id="wrapper">
+<div id="individuals">
   <h1>Divisions:</h1>
 
   <p>
@@ -46,7 +47,7 @@
   </div>
 </div>
 
-<div id="Tree">
+<div id="tree">
   <% if @divisions.any? %>
     <% @divisions.each() do |division| %>
     <ul>
@@ -61,4 +62,5 @@
     </ul>
     <% end %>
   <% end %>
+</div>
 </div>
