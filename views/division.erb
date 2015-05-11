@@ -14,26 +14,40 @@
 
 <br>
 
-<% if @selector == 'reveal' %>
-<form action='/divisions/<%= @division.id %>/employee' method='post'>
-  <input type="hidden" name="_method" value="patch">
-  <div class='form-group'>
-    <% @out_employees.each() do |employee| %>
-    <div class="checkbox">
-      <label>
-        <input type="checkbox" id="<%= employee.id() %>" name="employee_ids[]" value="<%= employee.id() %>"><%= employee.name() %>
-      </label>
-    </div>
-    <% end %>
-    <button class='btn btn-success' id="attach_employees">Attach Employees</button>
-  </div>
-</form>
-<% else %>
-  <form action="/divisions/<%= @division.id %>/reveal" method='get'>
-    <button id="reveal_employee_list" class='btn btn-primary'>Select Employees</button>
-  </form>
-<% end %>
+<% if @out_employees.any? %>
 
+<% if @selector == 'reveal' %>
+  <form action='/divisions/<%= @division.id %>/employee' method='post'>
+  <input type="hidden" name="_method" value="patch">
+
+    <div>
+      <% @out_employees.each() do |employee| %>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" id="<%= employee.id() %>" name="employee_ids[]" value="<%= employee.id() %>"><%= employee.name() %>
+        </label>
+      </div>
+      <% end %>
+      <button class='btn btn-success' id="attach_employees">Attach Employees</button>
+    </div>
+
+  </form>
+  <% else %>
+    <form action="/divisions/<%= @division.id %>/reveal" method='get'>
+      <button id="reveal_employee_list" class='btn btn-primary'>Select Employees</button>
+    </form>
+  <% end %>
+
+  <% else %>
+    There are no employees available to add.
+<br>
+  <% end %>
+
+
+
+
+
+<br>
 <% if @selector == 'update' %>
   <form action='/divisions/<%= @division.id %>' method='post'>
     <input type="hidden" name="_method" value="patch">

@@ -49,6 +49,7 @@
 
 <div id="tree">
   <% if @divisions.any? %>
+  <h3>Company Tree</h3>
     <% @divisions.each() do |division| %>
     <ul>
       <li><%= division.name %></li>

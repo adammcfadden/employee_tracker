@@ -28,6 +28,7 @@ end
 get '/divisions/:id' do
   @division = Division.find(params.fetch('id').to_i())
   @employees = Employee.get_by_division_id(@division.id)
+  @out_employees = Employee.get_division_id_inverse(@division.id)
   erb :division
 end
 
@@ -42,6 +43,7 @@ end
 patch '/divisions/:id' do
    @division = Division.find(params.fetch('id').to_i())
    @division.update({:name => params.fetch('new_name')})
+   @out_employees = Employee.get_division_id_inverse(@division.id)
    @employees = Employee.get_by_division_id(@division.id)
    erb(:division)
 end
@@ -66,13 +68,16 @@ end
 
 patch '/divisions/:id/employee' do
   selected_employees = []
-  params.fetch('employee_ids').each() do |employee_id|
-    selected_employees.push(Employee.find(employee_id.to_i()))
-  end
-  selected_employees.each() do |employee|
-    employee.update({:division_id => params.fetch('id')})
+  if(params.has_key?('employee_ids'))
+    params.fetch('employee_ids').each() do |employee_id|
+      selected_employees.push(Employee.find(employee_id.to_i()))
+    end
+    selected_employees.each() do |employee|
+      employee.update({:division_id => params.fetch('id')})
+    end
   end
   @division = Division.find(params.fetch('id').to_i())
   @employees = Employee.get_by_division_id(@division.id())
+  @out_employees = Employee.get_division_id_inverse(@division.id)
   erb(:division)
 end
