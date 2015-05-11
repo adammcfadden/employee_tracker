@@ -1,0 +1,22 @@
+<h1>Divisions:</h1>
+
+<p>
+  <% if @divisions.any? %>
+  <ul>
+    <% @divisions.each() do |division| %>
+      <li><%= division.name %></li>
+    <% end %>
+  </ul>
+  <% else %>
+    There are no divisions.
+  <% end %>
+</p>
+
+<div class='form-group'>
+  <form action="/divisions" method="post">
+    <label for="new_division">Enter a new Division Name:</label>
+    <input required type="text" name="new_division" id="new_division" class='form-control'>
+    <br>
+    <button class='btn btn-primary' id='add_division' type='submit' name="add_division">Add Division</button>
+  </form>
+</div>
