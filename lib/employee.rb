@@ -14,7 +14,7 @@ class Employee < ActiveRecord::Base
   define_singleton_method(:get_division_id_inverse) do |find_division_id|
     out_division = []
     Employee.all().each() do |employee|
-      if(employee.division_id != find_division_id)
+      if(employee.division_id == nil)
         out_division.push(employee)
       end
     end

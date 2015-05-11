@@ -1,4 +1,4 @@
-ENV['RACK_ENV'] = 'development'
+# ENV['RACK_ENV'] = 'development'
 
 require 'sinatra'
 require 'sinatra/reloader'
@@ -51,6 +51,9 @@ delete '/divisions/:id' do
   @division.delete
   @divisions = Division.all()
   @employees = Employee.all()
+  Employee.get_by_division_id(params.fetch('id').to_i()).each() do |employee|
+    employee.update({:division_id => nil})
+  end
   erb(:divisions)
 end
 
